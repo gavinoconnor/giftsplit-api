@@ -6,14 +6,13 @@ class Api::V1::ListsController < ApplicationController
     render json: @lists
   end
 
-  def show
-    @list = List.find(params[:id])
-    render json: @list 
-  end
-
   def create 
-    @list = List.create(list_params)
-    render json: @list
+    @list = List.create!(list_params)
+      if @list
+       render json: @list
+      else 
+       render json: @list.errors
+      end
   end
 
   def update
@@ -24,7 +23,7 @@ class Api::V1::ListsController < ApplicationController
 
   def destroy 
     @list = List.find(params[:id])
-    List.destroy(@list)
+    @list.destroy
   end
 
   private
